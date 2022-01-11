@@ -1,34 +1,17 @@
-const connectToMongo = require('./db.js')
+const connectToMongo = require('./db');
 const express = require('express')
-const path = require('path')
 
+connectToMongo();
 const app = express()
 const port = 5000
 
-
-//connectToMongo();
-//Available Routes
 app.use(express.json())
+
+// Available Routes
 app.use('/api/auth', require('./routes/auth'))
-app.use('/api/notes', require('./routes/notes')) 
-
-const akarshMiddleware = (req,res,next)=>{
-  console.log(req)
-  next()
-}
-
-app.use(express.static(path.join(__dirname, 'public')))
-//app.use(akarshMiddleware)
-
-app.get('/',(req, res)=>{
-  //res.sendFile(path.join(__dirname, 'public/index.html'))
-  //res.status(404);
-})
-app.get('/about',(req, res)=>{
-  res.send("This is about page")
-})
+app.use('/api/notes', require('./routes/notes'))
 
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-}) 
+})
